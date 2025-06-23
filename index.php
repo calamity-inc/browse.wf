@@ -31,10 +31,18 @@
 			document.getElementById("results-status").textContent = "Loading...";
 		}
 
-		document.getElementById("query").oninput = function()
-		{
-			document.getElementById("results-status").textContent = "Sorry, data is still downloading. Your query will be processed ASAP.";
-		};
+               document.getElementById("query").oninput = function()
+               {
+                       if (this.value == "")
+                       {
+                               history.replaceState({}, undefined, "/");
+                       }
+                       else
+                       {
+                               history.replaceState({}, undefined, "/#q=" + encodeURIComponent(this.value));
+                       }
+                       document.getElementById("results-status").textContent = "Sorry, data is still downloading. Your query will be processed ASAP.";
+               };
 
 		Promise.all([
 			getDictPromise(),
