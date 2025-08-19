@@ -32,19 +32,17 @@
 	<?php require "components/navbar.php"; ?>
 	<div class="container pt-3">
 		<div class="alert alert-warning" role="alert">
-			As of update 38.0.8, it is no longer possible to get profile information via username. To use this tool, you now need an account id. To find your own account id, open your EE.log (<code>%localappdata%\Warframe\EE.log</code>) and look for "Logged in" — your account id will be in the parentheses.
+			As of update 38.0.8, profile information must be downloaded manually. Retrieve your data by visiting the appropriate URL for your platform (replace <code>ACCOUNTID</code> with your account id in lowercase), save the resulting JSON, and upload it below.
+			<ul class="mb-0">
+				<li>PC: <code>http://content.warframe.com/dynamic/getProfileViewingData.php?playerId=ACCOUNTID</code></li>
+				<li>PlayStation: <code>http://content-ps4.warframe.com/dynamic/getProfileViewingData.php?playerId=ACCOUNTID</code></li>
+				<li>Xbox: <code>http://content-xb1.warframe.com/dynamic/getProfileViewingData.php?playerId=ACCOUNTID</code></li>
+				<li>Switch: <code>http://content-swi.warframe.com/dynamic/getProfileViewingData.php?playerId=ACCOUNTID</code></li>
+				<li>Mobile: <code>http://content-mob.warframe.com/dynamic/getProfileViewingData.php?playerId=ACCOUNTID</code></li>
+			</ul>
 		</div>
-		<form class="input-group mb-3" onsubmit="event.preventDefault();doLookup();">
-			<input id="username" type="text" class="form-control" value="" placeholder="Account ID" />
-			<span class="input-group-text">on</span>
-			<select id="platform" class="form-control">
-				<option value="pc">PC</option>
-				<option value="ps4">PlayStation</option>
-				<option value="xb1">Xbox</option>
-				<option value="swi">Switch</option>
-				<option value="mob">Mobile</option>
-			</select>
-			<input type="submit" class="btn btn-primary" />
+		<form class="mb-3">
+			<input id="profile-file" type="file" class="form-control" accept="application/json" onchange="loadProfile(this.files[0]);" />
 		</form>
 		<div id="status" class="alert alert-light"><div class="spinner-border spinner-border-sm me-2"></div><span>Loading</span></div>
 		<h3 class="mb-0"><span id="profile-name"></span><span class="text-body-secondary" id="profile-discriminator"></span></h3>
@@ -419,25 +417,7 @@
 		}
 
 		const params = new URLSearchParams(location.hash.replace("#", ""));
-		let initialDataUrl = "supplemental-data/profile-[DE]Rebecca.json";
-		if (params.has("account"))
-		{
-			initialDataUrl = "https://conduit.browse.wf/profilebyid?account=" + encodeURIComponent(params.get("account"));
-			window.hashprefix = "account=" + encodeURIComponent(params.get("account")) + "&";
-			if (params.has("platform"))
-			{
-				initialDataUrl += "&platform=" + params.get("platform");
-				window.hashprefix += "platform=" + params.get("platform") + "&";
-			}
-		}
-		else
-		{
-			window.hashprefix = "";
-		}
-		if (params.has("platform"))
-		{
-			document.getElementById("platform").value = params.get("platform");
-		}
+                window.hashprefix = "";
 
 		Promise.all([
 			getDictPromise(),
@@ -450,53 +430,46 @@
 			fetch("https://browse.wf/warframe-public-export-plus/ExportSentinels.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportSyndicates.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportWarframes.json").then(res => res.json()),
-			fetch("https://browse.wf/warframe-public-export-plus/ExportWeapons.json").then(res => res.json()),
-			fetch(initialDataUrl).then(res => res.json())
-			]).then(([
-				dict,
-				ExportAchievements,
-				ExportCustoms,
-				ExportEnemies,
-				ExportFlavour,
-				ExportNightwave,
-				ExportRegions,
-				ExportSentinels,
-				ExportSyndicates,
-				ExportWarframes,
-				ExportWeapons,
-				profile
-			]) =>
+			fetch("https://browse.wf/warframe-public-export-plus/ExportWeapons.json").then(res => res.json())
+		]).then([
+			dict,
+			ExportAchievements,
+			ExportCustoms,
+			ExportEnemies,
+			ExportFlavour,
+			ExportNightwave,
+			ExportRegions,
+			ExportSentinels,
+			ExportSyndicates,
+			ExportWarframes,
+			ExportWeapons
+		]) =>
+	{
+		window.dict = dict;
+		window.ExportAchievements = ExportAchievements;
+		window.ExportCustoms = ExportCustoms;
+		window.ExportEnemies = ExportEnemies;
+		window.ExportFlavour = ExportFlavour;
+		window.ExportRegions = ExportRegions;
+		window.ExportSentinels = ExportSentinels;
+		window.ExportSyndicates = ExportSyndicates;
+		window.ExportWarframes = ExportWarframes;
+		window.ExportWeapons = ExportWeapons;
+
+		for (let i = 0; i != syndicateTags.length; ++i)
 		{
-			window.dict = dict;
-			window.ExportAchievements = ExportAchievements;
-			window.ExportCustoms = ExportCustoms;
-			window.ExportEnemies = ExportEnemies;
-			window.ExportFlavour = ExportFlavour;
-			window.ExportRegions = ExportRegions;
-			window.ExportSentinels = ExportSentinels;
-			window.ExportSyndicates = ExportSyndicates;
-			window.ExportWarframes = ExportWarframes;
-			window.ExportWeapons = ExportWeapons;
-			window.profile = profile;
-			//window.profile = { Results: [ { DisplayName: "asdasdasd", Created: { $date: { $numberLong: "1364064293561" } } } ] };
-
-			for (let i = 0; i != syndicateTags.length; ++i)
+			if (syndicateTags[i] == "NIGHTWAVE")
 			{
-				if (syndicateTags[i] == "NIGHTWAVE")
-				{
-					syndicateTags[i] = ExportNightwave.affiliationTag;
-				}
+				syndicateTags[i] = ExportNightwave.affiliationTag;
 			}
+		}
 
-			document.getElementById("profile-nav").classList.remove("d-none");
-			activateTab(params.has("tab") ? params.get("tab") : "fashion"); // default tab
-
-			renderProfile();
-			onLanguageUpdate = function()
-			{
-				renderProfile();
-			};
-		});
+		document.querySelector("#status").classList.add("d-none");
+		onLanguageUpdate = function()
+		{
+			if (window.profile) renderProfile();
+		};
+	});
 
 		function isXplatName(name)
 		{
@@ -517,36 +490,35 @@
 			return name;
 		}
 
-		let lookup_in_progress = false;
-		function doLookup()
+		function loadProfile(file)
 		{
-			if (!("profile" in window) || lookup_in_progress)
+			if (!file)
 			{
-				alert("Still loading, please wait.");
 				return;
 			}
-			lookup_in_progress = true;
-			document.querySelector("#status span").textContent = "Fetching data for " + document.getElementById("username").value;
+			document.querySelector("#status span").textContent = "Loading profile...";
 			document.querySelector("#status").classList.remove("d-none");
-			fetch("https://conduit.browse.wf/profilebyid?account=" + encodeURIComponent(document.getElementById("username").value) + "&platform=" + document.getElementById("platform").value).then(res => res.json()).then(data =>
+			const reader = new FileReader();
+			reader.onload = function(e)
 			{
-				if (data)
+				try
 				{
-					window.profile = data;
-					window.hashprefix = "account=" + encodeURIComponent(sanitiseName(profile.Results[0].AccountId.$oid)) + "&platform=" + profile.platform + "&";
-					location.hash = hashprefix + "tab=fashion"; // default tab
+					window.profile = JSON.parse(e.target.result);
+					document.getElementById("profile-nav").classList.remove("d-none");
+					activateTab(params.has("tab") ? params.get("tab") : "fashion");
+					renderProfile();
+					if (!params.has("tab"))
+					{
+						location.hash = "tab=fashion";
+					}
 				}
-				else
+				catch (err)
 				{
-					alert("Failed to load data for " + document.getElementById("username").value);
+					alert("Failed to parse JSON file.");
 				}
-				renderProfile();
-				lookup_in_progress = false;
-			}).catch(() => {
-				alert("Bad request. Please note that you need to input an account id.");
-				renderProfile();
-				lookup_in_progress = false;
-			});
+				document.querySelector("#status").classList.add("d-none");
+			};
+			reader.readAsText(file);
 		}
 
 		function renderProfile()
