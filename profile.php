@@ -481,6 +481,11 @@
 			{
 				renderProfile();
 			};
+
+			if (document.getElementById("profile-file").files.length)
+			{
+				loadProfile(document.getElementById("profile-file").files[0]);
+			}
 		});
 
 		function isXplatName(name)
@@ -526,6 +531,7 @@
 				}
 				catch (err)
 				{
+					console.error(err);
 					alert("Failed to parse JSON file.");
 				}
 				document.querySelector("#status").classList.add("d-none");
