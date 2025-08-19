@@ -32,13 +32,18 @@
 	<?php require "components/navbar.php"; ?>
 	<div class="container pt-3">
 		<div class="alert alert-warning" role="alert">
-			As of update 38.0.8, profile information must be downloaded manually. Retrieve your data by visiting the appropriate URL for your platform (replace <code>ACCOUNTID</code> with your account id in lowercase), save the resulting JSON, and upload it below.
 			<ul class="mb-0">
-				<li>PC: <code>http://content.warframe.com/dynamic/getProfileViewingData.php?playerId=ACCOUNTID</code></li>
-				<li>PlayStation: <code>http://content-ps4.warframe.com/dynamic/getProfileViewingData.php?playerId=ACCOUNTID</code></li>
-				<li>Xbox: <code>http://content-xb1.warframe.com/dynamic/getProfileViewingData.php?playerId=ACCOUNTID</code></li>
-				<li>Switch: <code>http://content-swi.warframe.com/dynamic/getProfileViewingData.php?playerId=ACCOUNTID</code></li>
-				<li>Mobile: <code>http://content-mob.warframe.com/dynamic/getProfileViewingData.php?playerId=ACCOUNTID</code></li>
+				<li>As of update 38.0.8, it is no longer possible to get profile information via username. To use this tool, you now need an account id. To find your own account id, open your EE.log (<code>%localappdata%\Warframe\EE.log</code>) and look for "Logged in" — your account id will be in the parentheses.</li>
+				<li>
+					As of 2025-08-19, DE seem to have imposed a server-side rate-limit on our benevolent request proxying service. I do not like cat and mouse games, so you can manually retrieve your data by visiting the appropriate URL for your platform (replace <code>ACCOUNTID</code>), save the resulting JSON, and upload it below.
+					<ul>
+						<li>PC: <code>http://content.warframe.com/dynamic/getProfileViewingData.php?playerId=ACCOUNTID</code></li>
+						<li>PlayStation: <code>http://content-ps4.warframe.com/dynamic/getProfileViewingData.php?playerId=ACCOUNTID</code></li>
+						<li>Xbox: <code>http://content-xb1.warframe.com/dynamic/getProfileViewingData.php?playerId=ACCOUNTID</code></li>
+						<li>Switch: <code>http://content-swi.warframe.com/dynamic/getProfileViewingData.php?playerId=ACCOUNTID</code></li>
+						<li>Mobile: <code>http://content-mob.warframe.com/dynamic/getProfileViewingData.php?playerId=ACCOUNTID</code></li>
+					</ul>
+				</li>
 			</ul>
 		</div>
 		<form class="mb-3">
