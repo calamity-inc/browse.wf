@@ -430,46 +430,53 @@
 			fetch("https://browse.wf/warframe-public-export-plus/ExportSentinels.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportSyndicates.json").then(res => res.json()),
 			fetch("https://browse.wf/warframe-public-export-plus/ExportWarframes.json").then(res => res.json()),
-			fetch("https://browse.wf/warframe-public-export-plus/ExportWeapons.json").then(res => res.json())
-		]).then([
-			dict,
-			ExportAchievements,
-			ExportCustoms,
-			ExportEnemies,
-			ExportFlavour,
-			ExportNightwave,
-			ExportRegions,
-			ExportSentinels,
-			ExportSyndicates,
-			ExportWarframes,
-			ExportWeapons
-		]) =>
-	{
-		window.dict = dict;
-		window.ExportAchievements = ExportAchievements;
-		window.ExportCustoms = ExportCustoms;
-		window.ExportEnemies = ExportEnemies;
-		window.ExportFlavour = ExportFlavour;
-		window.ExportRegions = ExportRegions;
-		window.ExportSentinels = ExportSentinels;
-		window.ExportSyndicates = ExportSyndicates;
-		window.ExportWarframes = ExportWarframes;
-		window.ExportWeapons = ExportWeapons;
-
-		for (let i = 0; i != syndicateTags.length; ++i)
+			fetch("https://browse.wf/warframe-public-export-plus/ExportWeapons.json").then(res => res.json()),
+			fetch("supplemental-data/profile-[DE]Rebecca.json").then(res => res.json())
+			]).then(([
+				dict,
+				ExportAchievements,
+				ExportCustoms,
+				ExportEnemies,
+				ExportFlavour,
+				ExportNightwave,
+				ExportRegions,
+				ExportSentinels,
+				ExportSyndicates,
+				ExportWarframes,
+				ExportWeapons,
+				profile
+			]) =>
 		{
-			if (syndicateTags[i] == "NIGHTWAVE")
+			window.dict = dict;
+			window.ExportAchievements = ExportAchievements;
+			window.ExportCustoms = ExportCustoms;
+			window.ExportEnemies = ExportEnemies;
+			window.ExportFlavour = ExportFlavour;
+			window.ExportRegions = ExportRegions;
+			window.ExportSentinels = ExportSentinels;
+			window.ExportSyndicates = ExportSyndicates;
+			window.ExportWarframes = ExportWarframes;
+			window.ExportWeapons = ExportWeapons;
+			window.profile = profile;
+			//window.profile = { Results: [ { DisplayName: "asdasdasd", Created: { $date: { $numberLong: "1364064293561" } } } ] };
+
+			for (let i = 0; i != syndicateTags.length; ++i)
 			{
-				syndicateTags[i] = ExportNightwave.affiliationTag;
+				if (syndicateTags[i] == "NIGHTWAVE")
+				{
+					syndicateTags[i] = ExportNightwave.affiliationTag;
+				}
 			}
-		}
 
-		document.querySelector("#status").classList.add("d-none");
-		onLanguageUpdate = function()
-		{
-			if (window.profile) renderProfile();
-		};
-	});
+			document.getElementById("profile-nav").classList.remove("d-none");
+			activateTab(params.has("tab") ? params.get("tab") : "fashion"); // default tab
+
+			renderProfile();
+			onLanguageUpdate = function()
+			{
+				renderProfile();
+			};
+		});
 
 		function isXplatName(name)
 		{
