@@ -24,12 +24,12 @@
 
 		Promise.all([
 			getDictPromise(),
-			fetch("https://browse.wf/warframe-public-export-plus/ExportRelics.json").then(res => res.json()),
-			fetch("https://browse.wf/warframe-public-export-plus/ExportRewards.json").then(res => res.json()),
-			fetch("https://browse.wf/warframe-public-export-plus/ExportRecipes.json").then(res => res.json()),
-			fetch("https://browse.wf/warframe-public-export-plus/ExportWeapons.json").then(res => res.json()),
-			fetch("https://browse.wf/warframe-public-export-plus/ExportWarframes.json").then(res => res.json()),
-			fetch("https://browse.wf/warframe-public-export-plus/ExportSentinels.json").then(res => res.json()),
+			fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@0.5.x/ExportRelics.json").then(res => res.json()),
+			fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@0.5.x/ExportRewards.json").then(res => res.json()),
+			fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@0.5.x/ExportRecipes.json").then(res => res.json()),
+			fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@0.5.x/ExportWeapons.json").then(res => res.json()),
+			fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@0.5.x/ExportWarframes.json").then(res => res.json()),
+			fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@0.5.x/ExportSentinels.json").then(res => res.json()),
 			fetch("https://raw.githubusercontent.com/calamity-inc/warframe-worldstate-history/senpai/worldState.json").then(res => res.json()),
 			]).then(function([ dict, ExportRelics, ExportRewards, ExportRecipes, ExportWeapons, ExportWarframes, ExportSentinels, worldState ])
 		{

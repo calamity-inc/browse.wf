@@ -14,7 +14,7 @@ document.querySelectorAll(".navbar-nav .nav-link.active, .navbar-nav .dropdown-i
 
 function getDictPromise()
 {
-	return fetch("https://browse.wf/warframe-public-export-plus/dict." + (localStorage.getItem("lang") ?? "en") + ".json").then(res => res.json());
+	return fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@0.5.x/dict." + (localStorage.getItem("lang") ?? "en") + ".json").then(res => res.json());
 }
 
 function getOSDictPromise()
