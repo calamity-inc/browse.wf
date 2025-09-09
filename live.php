@@ -378,9 +378,9 @@
 		const dict_promise = getDictPromise();
 		const osdict_promise = getOSDictPromise();
 		const dicts_promise = Promise.all([ dict_promise, osdict_promise ]);
-		const ExportRegions_promise = fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@0.5.x/ExportRegions.json").then(res => res.json());
-		const ExportChallenges_promise = fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@0.5.x/ExportChallenges.json").then(res => res.json());
-		const eMissionType_promise = fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@0.5.x/supplementals/eMissionType.json").then(res => res.json());
+		const ExportRegions_promise = fetch("https://browse.wf/warframe-public-export-plus/ExportRegions.json").then(res => res.json());
+		const ExportChallenges_promise = fetch("https://browse.wf/warframe-public-export-plus/ExportChallenges.json").then(res => res.json());
+		const eMissionType_promise = fetch("https://browse.wf/warframe-public-export-plus/supplementals/eMissionType.json").then(res => res.json());
 
 		dict_promise.then(dict => { window.dict = dict });
 		osdict_promise.then(osdict => { window.osdict = osdict });
@@ -1506,7 +1506,7 @@
 		{
 			if (!window.eFaction_promise)
 			{
-				window.eFaction_promise = fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@0.5.x/supplementals/eFaction.json").then(res => res.json())
+				window.eFaction_promise = fetch("https://browse.wf/warframe-public-export-plus/supplementals/eFaction.json").then(res => res.json())
 			}
 			await dicts_promise;
 			return dict[(await eFaction_promise).find(x => x.tag == tag).name];

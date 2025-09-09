@@ -132,9 +132,9 @@
 		let weaponConfig = "LotusRifleRandomModRare:1";
 		Promise.all([
 			getDictPromise(),
-			fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@0.5.x/ExportWeapons.json").then(res => res.json()),
-			fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@0.5.x/ExportUpgrades.json").then(res => res.json()),
-			fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@0.5.x/ExportTextIcons.json").then(res => res.json())
+			fetch("https://browse.wf/warframe-public-export-plus/ExportWeapons.json").then(res => res.json()),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportUpgrades.json").then(res => res.json()),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportTextIcons.json").then(res => res.json())
 		]).then(([ dict, ExportWeapons, ExportUpgrades, ExportTextIcons ]) => {
 			window.dict = dict;
 			window.ExportWeapons = ExportWeapons;

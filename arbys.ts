@@ -95,8 +95,8 @@ if (params.has("exclude"))
 
 Promise.all([
 	getDictPromise(),
-	fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@^0.5.86/ExportFactions.json").then(res => res.json()),
-	fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@^0.5.86/ExportRegions.json").then(res => res.json()),
+	fetch("https://browse.wf/warframe-public-export-plus/ExportFactions.json").then(res => res.json()),
+	fetch("https://browse.wf/warframe-public-export-plus/ExportRegions.json").then(res => res.json()),
 	fetch("https://browse.wf/arbys.txt").then(res => res.text())
 ]).then(([ dict, ExportFactions, ExportRegions, arbys ]) => {
 	(window as any).dict = dict;

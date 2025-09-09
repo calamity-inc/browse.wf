@@ -71,8 +71,8 @@
 		}
 
 		Promise.all([
-			fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@0.5.x/ExportFlavour.json").then(res => res.json()),
-			fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@0.5.x/ExportImages.json").then(res => res.json()),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportFlavour.json").then(res => res.json()),
+			fetch("https://browse.wf/warframe-public-export-plus/ExportImages.json").then(res => res.json()),
 			getDictPromise()
 		]).then(([ExportFlavour, ExportImages, dict]) =>
 		{
