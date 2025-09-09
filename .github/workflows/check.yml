@@ -1,0 +1,25 @@
+name: Check
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm exec tsc
+      - name: Fail if there are uncommitted changes
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            echo "Uncommitted changes detected:"
+            git status
+            git --no-pager diff
+            exit 1
+          fi
