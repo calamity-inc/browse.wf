@@ -1,0 +1,10 @@
+{
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "@typescript-eslint/no-deprecated": "warn"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  }
+}
