@@ -1,8 +1,4 @@
-interface Warframe {
-    name: string;
-    parentName: string;
-    productCategory: string;
-}
+import type { IPowersuit } from "warframe-public-export-plus";
 
 interface BaseSuitType {
     name: string;
@@ -22,9 +18,11 @@ interface Inventory {
     };
 }
 
-interface Window {
-    dict: Record<string, string>;
-    baseSuitTypes: Record<string, BaseSuitType>;
+declare global {
+    interface Window {
+        dict: Record<string, string>;
+        baseSuitTypes: Record<string, BaseSuitType>;
+    }
 }
 
 declare function getDictPromise(): Promise<Record<string, string>>;
@@ -95,12 +93,12 @@ function doSubmit(): void {
 Promise.all([
     getDictPromise(),
     fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@0.5.x/ExportWarframes.json").then(res => res.json()),
-]).then(([dict, ExportWarframes]: [Record<string, string>, Record<string, Warframe>]) => {
+]).then(([dict, ExportWarframes]: [Record<string, string>, Record<string, IPowersuit>]) => {
     window.dict = dict;
 
     onLanguageUpdate = function (): void {
         window.baseSuitTypes = {};
-        const warframes: Warframe[] = Object.values(ExportWarframes);
+        const warframes: IPowersuit[] = Object.values(ExportWarframes);
         warframes.sort((a, b) => dict[a.name].localeCompare(dict[b.name]));
         warframes.forEach(suit => {
             if (suit.productCategory == "Suits" && suit.name.indexOf("Prime") == -1 && suit.name.indexOf("Umbra") == -1) {
@@ -114,7 +112,7 @@ Promise.all([
         document.querySelectorAll<HTMLSelectElement>(".suit-select").forEach(select => {
             const value = select.value || "---";
             select.innerHTML = "<option>---</option>";
-            for (const [uniqueName, data] of Object.entries(window.baseSuitTypes)) {
+            for (const [uniqueName, data] of Object.entries(window.baseSuitTypes) as [string, BaseSuitType][]) {
                 const option = document.createElement("option");
                 option.value = uniqueName;
                 option.textContent = dict[data.name];

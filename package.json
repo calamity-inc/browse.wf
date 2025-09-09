@@ -1,0 +1,16 @@
+{
+  "name": "browse.wf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "common.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "warframe-public-export-plus": "^0.5.86"
+  }
+}

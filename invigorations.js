@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 let onLanguageUpdate;
 const peekBox = document.getElementById("peek");
 peekBox.onchange = function () {
