@@ -1,3 +1,21 @@
+import type { IRegion } from "warframe-public-export-plus";
+
+// common.js
+declare let onLanguageUpdate: () => void;
+declare function getDictPromise(): Promise<Record<string, string>>;
+declare function toTitleCase(str: string): string;
+
+// arbyTiers.js
+declare const arbyTiers: Record<string, string>;
+
+// fetch
+declare let dict: Record<string, string>;
+declare let ExportRegions: Record<string, IRegion>;
+declare let arbys: [number, string][];
+
+// state
+declare let currentHour: number;
+
 const days = [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ];
 const months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 
@@ -32,10 +50,10 @@ document.getElementById("local-time-option").textContent += " (" + formattz(new 
 
 function formathour(hour)
 {
-	switch (document.getElementById("select-hourfmt").value)
+	switch ((document.getElementById("select-hourfmt") as HTMLSelectElement).value)
 	{
 	case "mil": default: // This is the default because it indicates when zulu time is used, making it easier to parse screenshots of the schedule.
-		return totwo(hour) + "00" + (document.getElementById("select-tz").value == "zulu" ? "Z" : "");
+		return totwo(hour) + "00" + ((document.getElementById("select-tz") as HTMLSelectElement).value == "zulu" ? "Z" : "");
 
 	case "24":
 		return totwo(hour) + ":00";
@@ -48,25 +66,25 @@ function formathour(hour)
 const params = new URLSearchParams(location.hash.replace("#", ""));
 if (params.has("days"))
 {
-	document.getElementById("select-days").value = params.get("days");
+	(document.getElementById("select-days") as HTMLSelectElement).value = params.get("days");
 }
-else if ("userAgentData" in navigator && navigator.userAgentData.mobile)
+else if ("userAgentData" in navigator && (navigator.userAgentData as { mobile?: boolean }).mobile)
 {
-	document.getElementById("select-days").value = 1;
+	(document.getElementById("select-days") as HTMLSelectElement).value = "1";
 }
 if (params.has("tz"))
 {
-	document.getElementById("select-tz").value = params.get("tz");
+	(document.getElementById("select-tz") as HTMLSelectElement).value = params.get("tz");
 }
 if (params.has("hourfmt"))
 {
-	document.getElementById("select-hourfmt").value = params.get("hourfmt");
+	(document.getElementById("select-hourfmt") as HTMLSelectElement).value = params.get("hourfmt");
 }
 if (params.has("exclude"))
 {
 	params.get("exclude").split(".").forEach(opt =>
 	{
-		const checkbox = document.getElementById("filter-" + opt);
+		const checkbox = document.getElementById("filter-" + opt) as HTMLInputElement | null;
 		if (checkbox)
 		{
 			checkbox.checked = false;
@@ -79,9 +97,9 @@ Promise.all([
 	fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@0.5.x/ExportRegions.json").then(res => res.json()),
 	fetch("https://browse.wf/arbys.txt").then(res => res.text())
 ]).then(([ dict, ExportRegions, arbys ]) => {
-	window.dict = dict;
-	window.ExportRegions = ExportRegions;
-	window.arbys = arbys.split("\n").map(line => line.split(",")).filter(arr => arr.length == 2);
+	(window as any).dict = dict;
+	(window as any).ExportRegions = ExportRegions;
+	(window as any).arbys = arbys.split("\n").map(line => line.split(",")).filter(arr => arr.length == 2).map(arr => [ parseInt(arr[0]), arr[1] ]);
 	onLanguageUpdate = function()
 	{
 		updateLog();
@@ -115,16 +133,16 @@ function updateLog()
 {
 	console.time("updateLog");
 
-	const zulu = (document.getElementById("select-tz").value == "zulu");
+	const zulu = ((document.getElementById("select-tz") as HTMLSelectElement).value == "zulu");
 
-	window.currentHour = Math.trunc(Date.now() / 3600000) * 3600;
+	currentHour = Math.trunc(Date.now() / 3600000) * 3600;
 
 	const epochHour = arbys[0][0];
 	const currentHourIndex = (currentHour - epochHour) / 3600;
 
 	// Update log
 	const currentYear = zulu ? new Date().getUTCFullYear() : new Date().getFullYear();
-	let remainingArbys = parseInt(document.getElementById("select-days").value) * 24;
+	let remainingArbys = parseInt((document.getElementById("select-days") as HTMLSelectElement).value) * 24;
 	let lastArbyDay = -1;
 	document.getElementById("log").innerHTML = "";
 	for (let i = currentHourIndex; i != arbys.length && remainingArbys-- > 0; ++i)
@@ -132,14 +150,14 @@ function updateLog()
 		const arr = arbys[i];
 
 		const thisArbyGrade = (arbyTiers[arr[1]] ?? "F");
-		if (!document.getElementById("filter-tier-" + thisArbyGrade).checked)
+		if (!(document.getElementById("filter-tier-" + thisArbyGrade) as HTMLInputElement).checked)
 		{
 			continue;
 		}
 
 		const node = ExportRegions[arr[1]];
-		if (!document.getElementById("filter-type-" + node.missionIndex).checked
-			|| !document.getElementById("filter-fc-" + node.factionIndex).checked
+		if (!(document.getElementById("filter-type-" + node.missionIndex) as HTMLInputElement).checked
+			|| !(document.getElementById("filter-fc-" + node.factionIndex) as HTMLInputElement).checked
 			)
 		{
 			continue;
@@ -165,7 +183,7 @@ function updateLog()
 		}
 
 		let span = document.createElement(arr[0] == currentHour ? "b" : "span");
-		span.setAttribute("data-timestamp", arr[0]);
+		span.setAttribute("data-timestamp", arr[0].toString());
 		span.textContent = formathour(thisArbyHour) + " • " + toTitleCase(loc(node.missionName)) + " - " + dict[node.factionName] + " @ " + loc(node.name) + ", " + loc(node.systemName) + " (" + thisArbyGrade + " tier";
 		if ("darkSectorData" in node)
 		{
@@ -206,7 +224,7 @@ function updateLog()
 			if (tr.children[1].innerHTML == "N/A")
 			{
 				tr.removeAttribute("data-starved");
-				tr.children[1].setAttribute("data-timestamp", arr[0]);
+				tr.children[1].setAttribute("data-timestamp", arr[0].toString());
 				tr.children[1].textContent = days[thisArbyWeekDay] + ", " + months[thisArbyMonth] + " " + thisArbyDay + ", " + formathour(thisArbyHour);
 				tr.children[2].textContent = toTitleCase(loc(node.missionName)) + " - " + dict[node.factionName] + " @ " + loc(node.name) + ", " + loc(node.systemName);
 				if ("darkSectorData" in node)
@@ -220,7 +238,7 @@ function updateLog()
 			if (tr.children[1].innerHTML == "N/A")
 			{
 				tr.removeAttribute("data-starved");
-				tr.children[1].setAttribute("data-timestamp", arr[0]);
+				tr.children[1].setAttribute("data-timestamp", arr[0].toString());
 				tr.children[1].textContent = days[thisArbyWeekDay] + ", " + months[thisArbyMonth] + " " + thisArbyDay + ", " + formathour(thisArbyHour);
 				tr.children[2].textContent = dict[node.factionName] + " @ " + loc(node.name) + ", " + loc(node.systemName);
 				if ("darkSectorData" in node)
@@ -234,7 +252,7 @@ function updateLog()
 			if (tr.children[1].innerHTML == "N/A")
 			{
 				tr.removeAttribute("data-starved");
-				tr.children[1].setAttribute("data-timestamp", arr[0]);
+				tr.children[1].setAttribute("data-timestamp", arr[0].toString());
 				tr.children[1].textContent = days[thisArbyWeekDay] + ", " + months[thisArbyMonth] + " " + thisArbyDay + ", " + formathour(thisArbyHour);
 				tr.children[2].textContent = toTitleCase(loc(node.missionName)) + " - " + loc(node.name) + ", " + loc(node.systemName);
 				if ("darkSectorData" in node)
@@ -248,9 +266,9 @@ function updateLog()
 	// Ensure data stays up-to-date
 	if (!("updater" in window))
 	{
-		window.updater = setInterval(function()
+		(window as any).updater = setInterval(function()
 		{
-			if (window.currentHour != (parseInt((Date.now() / 1000) / 3600) * 3600))
+			if (currentHour != (Math.trunc((Date.now() / 1000) / 3600) * 3600))
 			{
 				updateLog();
 			}
@@ -262,13 +280,13 @@ function updateLog()
 
 function saveSettings()
 {
-	let hash = "days=" + encodeURIComponent(document.getElementById("select-days").value)
-			+ "&tz=" + encodeURIComponent(document.getElementById("select-tz").value)
-			+ "&hourfmt=" + encodeURIComponent(document.getElementById("select-hourfmt").value)
+	let hash = "days=" + encodeURIComponent((document.getElementById("select-days") as HTMLSelectElement).value)
+			+ "&tz=" + encodeURIComponent((document.getElementById("select-tz") as HTMLSelectElement).value)
+			+ "&hourfmt=" + encodeURIComponent((document.getElementById("select-hourfmt") as HTMLSelectElement).value)
 			;
 
 	const filtered_away = [];
-	document.querySelectorAll("input[type=checkbox]").forEach(elm =>
+	document.querySelectorAll<HTMLInputElement>("input[type=checkbox]").forEach(elm =>
 	{
 		if (!elm.checked)
 		{
@@ -283,7 +301,7 @@ function saveSettings()
 	location.hash = hash;
 }
 
-document.querySelectorAll("select, input[type=checkbox]").forEach(elm =>
+document.querySelectorAll<HTMLSelectElement | HTMLInputElement>("select, input[type=checkbox]").forEach(elm =>
 {
 	elm.onchange = function()
 	{
