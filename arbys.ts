@@ -1,4 +1,4 @@
-import type { IRegion } from "warframe-public-export-plus";
+import type { IFaction, IRegion, TFaction } from "warframe-public-export-plus";
 
 // common.js
 declare let onLanguageUpdate: () => void;
@@ -10,6 +10,7 @@ declare const arbyTiers: Record<string, string>;
 
 // fetch
 declare let dict: Record<string, string>;
+declare let ExportFactions: Record<TFaction, IFaction>;
 declare let ExportRegions: Record<string, IRegion>;
 declare let arbys: [number, string][];
 
@@ -94,10 +95,12 @@ if (params.has("exclude"))
 
 Promise.all([
 	getDictPromise(),
-	fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@0.5.x/ExportRegions.json").then(res => res.json()),
+	fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@^0.5.86/ExportFactions.json").then(res => res.json()),
+	fetch("https://cdn.jsdelivr.net/gh/calamity-inc/warframe-public-export-plus@^0.5.86/ExportRegions.json").then(res => res.json()),
 	fetch("https://browse.wf/arbys.txt").then(res => res.text())
-]).then(([ dict, ExportRegions, arbys ]) => {
+]).then(([ dict, ExportFactions, ExportRegions, arbys ]) => {
 	(window as any).dict = dict;
+	(window as any).ExportFactions = ExportFactions;
 	(window as any).ExportRegions = ExportRegions;
 	(window as any).arbys = arbys.split("\n").map(line => line.split(",")).filter(arr => arr.length == 2).map(arr => [ parseInt(arr[0]), arr[1] ]);
 	onLanguageUpdate = function()
@@ -110,23 +113,23 @@ Promise.all([
 
 function updateFilterNamesForLocale()
 {
-	document.querySelector("label[for=filter-type-2]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Survival"]);
-	document.querySelector("label[for=filter-type-8]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Defense"]);
-	document.querySelector("label[for=filter-type-13]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Territory"]);
-	document.querySelector("label[for=filter-type-17]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Excavation"]);
-	document.querySelector("label[for=filter-type-21]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Purify"]);
-	document.querySelector("label[for=filter-type-27]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Evacuation"]);
-	document.querySelector("label[for=filter-type-33]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Artifact"]);
-	document.querySelector("label[for=filter-type-34]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Corruption"]);
-	document.querySelector("label[for=filter-type-35]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_VoidCascade"]);
-	document.querySelector("label[for=filter-type-36]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Armageddon"]);
-	document.querySelector("label[for=filter-type-38]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Alchemy"]);
+	document.querySelector("label[for=filter-MT_SURVIVAL]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Survival"]);
+	document.querySelector("label[for=filter-MT_DEFENSE]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Defense"]);
+	document.querySelector("label[for=filter-MT_TERRITORY]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Territory"]);
+	document.querySelector("label[for=filter-MT_EXCAVATE]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Excavation"]);
+	document.querySelector("label[for=filter-MT_PURIFY]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Purify"]);
+	document.querySelector("label[for=filter-MT_EVACUATION]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Evacuation"]);
+	document.querySelector("label[for=filter-MT_ARTIFACT]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Artifact"]);
+	document.querySelector("label[for=filter-MT_CORRUPTION]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Corruption"]);
+	document.querySelector("label[for=filter-MT_VOID_CASCADE]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_VoidCascade"]);
+	document.querySelector("label[for=filter-MT_ARMAGEDDON]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Armageddon"]);
+	document.querySelector("label[for=filter-MT_ALCHEMY]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Alchemy"]);
 
-	document.querySelector("label[for=filter-fc-0]").textContent = dict["/Lotus/Language/Game/Faction_GrineerUC"];
-	document.querySelector("label[for=filter-fc-1]").textContent = dict["/Lotus/Language/Game/Faction_CorpusUC"];
-	document.querySelector("label[for=filter-fc-2]").textContent = dict["/Lotus/Language/Game/Faction_InfestationUC"];
-	document.querySelector("label[for=filter-fc-3]").textContent = dict["/Lotus/Language/Game/Faction_OrokinUC"];
-	document.querySelector("label[for=filter-fc-7]").textContent = dict["/Lotus/Language/Game/Faction_MITW"];
+	document.querySelector("label[for=filter-FC_GRINEER]").textContent = dict["/Lotus/Language/Game/Faction_GrineerUC"];
+	document.querySelector("label[for=filter-FC_CORPUS]").textContent = dict["/Lotus/Language/Game/Faction_CorpusUC"];
+	document.querySelector("label[for=filter-FC_INFESTATION]").textContent = dict["/Lotus/Language/Game/Faction_InfestationUC"];
+	document.querySelector("label[for=filter-FC_OROKIN]").textContent = dict["/Lotus/Language/Game/Faction_OrokinUC"];
+	document.querySelector("label[for=filter-FC_MITW]").textContent = dict["/Lotus/Language/Game/Faction_MITW"];
 }
 
 function updateLog()
@@ -156,8 +159,8 @@ function updateLog()
 		}
 
 		const node = ExportRegions[arr[1]];
-		if (!(document.getElementById("filter-type-" + node.missionIndex) as HTMLInputElement).checked
-			|| !(document.getElementById("filter-fc-" + node.factionIndex) as HTMLInputElement).checked
+		if (!(document.getElementById("filter-" + node.missionType) as HTMLInputElement).checked
+			|| !(document.getElementById("filter-" + node.faction) as HTMLInputElement).checked
 			)
 		{
 			continue;
@@ -184,7 +187,7 @@ function updateLog()
 
 		let span = document.createElement(arr[0] == currentHour ? "b" : "span");
 		span.setAttribute("data-timestamp", arr[0].toString());
-		span.textContent = formathour(thisArbyHour) + " • " + toTitleCase(loc(node.missionName)) + " - " + dict[node.factionName] + " @ " + loc(node.name) + ", " + loc(node.systemName) + " (" + thisArbyGrade + " tier";
+		span.textContent = formathour(thisArbyHour) + " • " + toTitleCase(loc(node.missionName)) + " - " + dict[ExportFactions[node.faction].name] + " @ " + loc(node.name) + ", " + loc(node.systemName) + " (" + thisArbyGrade + " tier";
 		if ("darkSectorData" in node)
 		{
 			span.textContent += ", " + (node.darkSectorData.resourceBonus * 100).toFixed(0) + "% resource bonus";
@@ -226,7 +229,7 @@ function updateLog()
 				tr.removeAttribute("data-starved");
 				tr.children[1].setAttribute("data-timestamp", arr[0].toString());
 				tr.children[1].textContent = days[thisArbyWeekDay] + ", " + months[thisArbyMonth] + " " + thisArbyDay + ", " + formathour(thisArbyHour);
-				tr.children[2].textContent = toTitleCase(loc(node.missionName)) + " - " + dict[node.factionName] + " @ " + loc(node.name) + ", " + loc(node.systemName);
+				tr.children[2].textContent = toTitleCase(loc(node.missionName)) + " - " + dict[ExportFactions[node.faction].name] + " @ " + loc(node.name) + ", " + loc(node.systemName);
 				if ("darkSectorData" in node)
 				{
 					tr.children[2].textContent += " (" + (node.darkSectorData.resourceBonus * 100).toFixed(0) + "% resource bonus)";
@@ -234,13 +237,13 @@ function updateLog()
 			}
 		}
 		{
-			const tr = document.getElementById("next-type-" + node.missionIndex);
+			const tr = document.getElementById("next-" + node.missionType);
 			if (tr.children[1].innerHTML == "N/A")
 			{
 				tr.removeAttribute("data-starved");
 				tr.children[1].setAttribute("data-timestamp", arr[0].toString());
 				tr.children[1].textContent = days[thisArbyWeekDay] + ", " + months[thisArbyMonth] + " " + thisArbyDay + ", " + formathour(thisArbyHour);
-				tr.children[2].textContent = dict[node.factionName] + " @ " + loc(node.name) + ", " + loc(node.systemName);
+				tr.children[2].textContent = dict[ExportFactions[node.faction].name] + " @ " + loc(node.name) + ", " + loc(node.systemName);
 				if ("darkSectorData" in node)
 				{
 					tr.children[2].textContent += " (" + (node.darkSectorData.resourceBonus * 100).toFixed(0) + "% resource bonus)";
@@ -248,7 +251,7 @@ function updateLog()
 			}
 		}
 		{
-			const tr = document.getElementById("next-fc-" + node.factionIndex);
+			const tr = document.getElementById("next-" + node.faction);
 			if (tr.children[1].innerHTML == "N/A")
 			{
 				tr.removeAttribute("data-starved");
@@ -290,7 +293,7 @@ function saveSettings()
 	{
 		if (!elm.checked)
 		{
-			filtered_away.push(elm.id.substr(7)); // "filter-"
+			filtered_away.push(elm.id.substring(7)); // "filter-"
 		}
 	});
 	if (filtered_away.length != 0)

@@ -50,28 +50,28 @@
 						<th colspan="2">Next Occurrence</th>
 					</thead>
 					<tbody>
-						<tr id="next-type-2"><th><input id="filter-type-2" type="checkbox" class="form-check-input" checked /> <label for="filter-type-2">Survival</label></th><td></td><td></td></tr>
-						<tr id="next-type-8"><th><input id="filter-type-8" type="checkbox" class="form-check-input" checked /> <label for="filter-type-8">Defense</label></th><td></td><td></td></tr>
-						<tr id="next-type-13"><th><input id="filter-type-13" type="checkbox" class="form-check-input" checked /> <label for="filter-type-13">Interception</label></th><td></td><td></td></tr>
-						<tr id="next-type-17"><th><input id="filter-type-17" type="checkbox" class="form-check-input" checked /> <label for="filter-type-17">Excavation</label></th><td></td><td></td></tr>
-						<tr id="next-type-21"><th><input id="filter-type-21" type="checkbox" class="form-check-input" checked /> <label for="filter-type-21">Infested Salvage</label></th><td></td><td></td></tr>
-						<tr id="next-type-27"><th><input id="filter-type-27" type="checkbox" class="form-check-input" checked /> <label for="filter-type-27">Defection</label></th><td></td><td></td></tr>
-						<tr id="next-type-33"><th><input id="filter-type-33" type="checkbox" class="form-check-input" checked /> <label for="filter-type-33">Disruption</label></th><td></td><td></td></tr>
-						<tr id="next-type-34"><th><input id="filter-type-34" type="checkbox" class="form-check-input" checked /> <label for="filter-type-34">Void Flood</label></th><td></td><td></td></tr>
-						<tr id="next-type-35"><th><input id="filter-type-35" type="checkbox" class="form-check-input" checked /> <label for="filter-type-35">Void Cascade</label></th><td></td><td></td></tr>
-						<tr id="next-type-36"><th><input id="filter-type-36" type="checkbox" class="form-check-input" checked /> <label for="filter-type-36">Void Armageddon</label></th><td></td><td></td></tr>
-						<tr id="next-type-38"><th><input id="filter-type-38" type="checkbox" class="form-check-input" checked /> <label for="filter-type-38">Alchemy</label></th><td></td><td></td></tr>
+						<tr id="next-MT_SURVIVAL"><th><input id="filter-MT_SURVIVAL" type="checkbox" class="form-check-input" checked /> <label for="filter-MT_SURVIVAL">Survival</label></th><td></td><td></td></tr>
+						<tr id="next-MT_DEFENSE"><th><input id="filter-MT_DEFENSE" type="checkbox" class="form-check-input" checked /> <label for="filter-MT_DEFENSE">Defense</label></th><td></td><td></td></tr>
+						<tr id="next-MT_TERRITORY"><th><input id="filter-MT_TERRITORY" type="checkbox" class="form-check-input" checked /> <label for="filter-MT_TERRITORY">Interception</label></th><td></td><td></td></tr>
+						<tr id="next-MT_EXCAVATE"><th><input id="filter-MT_EXCAVATE" type="checkbox" class="form-check-input" checked /> <label for="filter-MT_EXCAVATE">Excavation</label></th><td></td><td></td></tr>
+						<tr id="next-MT_PURIFY"><th><input id="filter-MT_PURIFY" type="checkbox" class="form-check-input" checked /> <label for="filter-MT_PURIFY">Infested Salvage</label></th><td></td><td></td></tr>
+						<tr id="next-MT_EVACUATION"><th><input id="filter-MT_EVACUATION" type="checkbox" class="form-check-input" checked /> <label for="filter-MT_EVACUATION">Defection</label></th><td></td><td></td></tr>
+						<tr id="next-MT_ARTIFACT"><th><input id="filter-MT_ARTIFACT" type="checkbox" class="form-check-input" checked /> <label for="filter-MT_ARTIFACT">Disruption</label></th><td></td><td></td></tr>
+						<tr id="next-MT_CORRUPTION"><th><input id="filter-MT_CORRUPTION" type="checkbox" class="form-check-input" checked /> <label for="filter-MT_CORRUPTION">Void Flood</label></th><td></td><td></td></tr>
+						<tr id="next-MT_VOID_CASCADE"><th><input id="filter-MT_VOID_CASCADE" type="checkbox" class="form-check-input" checked /> <label for="filter-MT_VOID_CASCADE">Void Cascade</label></th><td></td><td></td></tr>
+						<tr id="next-MT_ARMAGEDDON"><th><input id="filter-MT_ARMAGEDDON" type="checkbox" class="form-check-input" checked /> <label for="filter-MT_ARMAGEDDON">Void Armageddon</label></th><td></td><td></td></tr>
+						<tr id="next-MT_ALCHEMY"><th><input id="filter-MT_ALCHEMY" type="checkbox" class="form-check-input" checked /> <label for="filter-MT_ALCHEMY">Alchemy</label></th><td></td><td></td></tr>
 						<tr id="next-tier-S"><th><input id="filter-tier-S" type="checkbox" class="form-check-input" checked /> <label for="filter-tier-S">S Tier</label></th><td></td><td></td></tr>
 						<tr id="next-tier-A"><th><input id="filter-tier-A" type="checkbox" class="form-check-input" checked /> <label for="filter-tier-A">A Tier</label></th><td></td><td></td></tr>
 						<tr id="next-tier-B"><th><input id="filter-tier-B" type="checkbox" class="form-check-input" checked /> <label for="filter-tier-B">B Tier</label></th><td></td><td></td></tr>
 						<tr id="next-tier-C"><th><input id="filter-tier-C" type="checkbox" class="form-check-input" checked /> <label for="filter-tier-C">C Tier</label></th><td></td><td></td></tr>
 						<tr id="next-tier-D"><th><input id="filter-tier-D" type="checkbox" class="form-check-input" checked /> <label for="filter-tier-D">D Tier</label></th><td></td><td></td></tr>
 						<tr id="next-tier-F"><th><input id="filter-tier-F" type="checkbox" class="form-check-input" checked /> <label for="filter-tier-F">F Tier</label></th><td></td><td></td></tr>
-						<tr id="next-fc-0"><th><input id="filter-fc-0" type="checkbox" class="form-check-input" checked /> <label for="filter-fc-0">Grineer</label></th><td></td><td></td></tr>
-						<tr id="next-fc-1"><th><input id="filter-fc-1" type="checkbox" class="form-check-input" checked /> <label for="filter-fc-1">Corpus</label></th><td></td><td></td></tr>
-						<tr id="next-fc-2"><th><input id="filter-fc-2" type="checkbox" class="form-check-input" checked /> <label for="filter-fc-2">Infested</label></th><td></td><td></td></tr>
-						<tr id="next-fc-3"><th><input id="filter-fc-3" type="checkbox" class="form-check-input" checked /> <label for="filter-fc-3">Corrupted</label></th><td></td><td></td></tr>
-						<tr id="next-fc-7"><th><input id="filter-fc-7" type="checkbox" class="form-check-input" checked /> <label for="filter-fc-7">The Murmur</label></th><td></td><td></td></tr>
+						<tr id="next-FC_GRINEER"><th><input id="filter-FC_GRINEER" type="checkbox" class="form-check-input" checked /> <label for="filter-FC_GRINEER">Grineer</label></th><td></td><td></td></tr>
+						<tr id="next-FC_CORPUS"><th><input id="filter-FC_CORPUS" type="checkbox" class="form-check-input" checked /> <label for="filter-FC_CORPUS">Corpus</label></th><td></td><td></td></tr>
+						<tr id="next-FC_INFESTATION"><th><input id="filter-FC_INFESTATION" type="checkbox" class="form-check-input" checked /> <label for="filter-FC_INFESTATION">Infested</label></th><td></td><td></td></tr>
+						<tr id="next-FC_OROKIN"><th><input id="filter-FC_OROKIN" type="checkbox" class="form-check-input" checked /> <label for="filter-FC_OROKIN">Corrupted</label></th><td></td><td></td></tr>
+						<tr id="next-FC_MITW"><th><input id="filter-FC_MITW" type="checkbox" class="form-check-input" checked /> <label for="filter-FC_MITW">The Murmur</label></th><td></td><td></td></tr>
 					</tbody>
 				</table>
 			</div>
