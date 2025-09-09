@@ -1,11 +1,13 @@
 {
   "scripts": {
+    "dev": "php-ts-dev",
     "lint": "eslint *.ts"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.43.0",
     "@typescript-eslint/parser": "^8.43.0",
     "eslint": "^8",
+    "php-ts-dev": "^0.1.1",
     "typescript": "^5.9.2",
     "warframe-public-export-plus": "^0.5.86"
   }
