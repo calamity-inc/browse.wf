@@ -69,7 +69,7 @@ if (params.has("q"))
 	document.getElementById("results-status").textContent = "Loading...";
 }
 
-(document.getElementById("query") as HTMLInputElement).oninput = function(this: HTMLInputElement)
+(document.getElementById("query") as HTMLInputElement).oninput = function(this: HTMLInputElement): void
 {
 	if (this.value == "")
 	{
@@ -191,7 +191,7 @@ Promise.all([
 		doQuery((document.getElementById("query") as HTMLInputElement).value);
 	}
 
-	document.getElementById("query").oninput = function(this: HTMLInputElement)
+	document.getElementById("query").oninput = function(this: HTMLInputElement): void
 	{
 		if (this.value == "")
 		{
@@ -220,7 +220,7 @@ Promise.all([
 	};
 });
 
-function updateMissionDeckNames()
+function updateMissionDeckNames(): void
 {
 	window.missionDeckNames = {
 		"/Lotus/Types/Game/MissionDecks/SortieRewards": ["Sortie"],
@@ -259,7 +259,7 @@ function updateMissionDeckNames()
 	});
 }
 
-function doQuery(query: string)
+function doQuery(query: string): void
 {
 	console.time("Input to language tags");
 	let results = getDictEntriesFromQuery(query).reduce((arr, [key, value]) =>
@@ -780,7 +780,7 @@ function getDictEntriesFromQuery(query: string): [string, string][]
 	});
 }
 
-function resolveTagsToUses(results)
+function resolveTagsToUses(results: { type: string; key: string; value: any }[]): { type: string; key: string; value: any }[]
 {
 	const res = [];
 	outer: for (const result of results)
@@ -802,7 +802,7 @@ function resolveTagsToUses(results)
 	return res;
 }
 
-function addUniqueNameResults(res, query)
+function addUniqueNameResults(res: { type: string; key: string; value: any }[], query: string): void
 {
 	query = query.toLowerCase();
 	for (const [type, entries] of Object.entries(window.meta_entries))

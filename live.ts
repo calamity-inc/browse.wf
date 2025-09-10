@@ -2,11 +2,11 @@ import type { IChallenge, IFaction, IMissionType, IRegion, TFaction, TMissionTyp
 
 // Oracle
 interface IBountyCycle {
-    expiry:         number;
-    rot:            string;
-    vaultRot:       string;
-    zarimanFaction: string;
-    bounties:       Record<string, {
+	expiry:         number;
+	rot:            string;
+	vaultRot:       string;
+	zarimanFaction: string;
+	bounties:       Record<string, {
 		node:      string;
 		challenge: string;
 		ally?:     string;
@@ -16,22 +16,22 @@ interface IBountyCycle {
 // Oracle
 interface IWeekly {
 	expiry:                    number;
-    labConquestMissions:       IConquestMission[];
-    labConquestFrameVariables: string[];
-    hexConquestMissions:       IConquestMission[];
-    hexConquestFrameVariables: string[];
+	labConquestMissions:       IConquestMission[];
+	labConquestFrameVariables: string[];
+	hexConquestMissions:       IConquestMission[];
+	hexConquestFrameVariables: string[];
 }
 interface IConquestMission {
 	type:       string;
-    variant:    string;
-    conditions: string[];
+	variant:    string;
+	conditions: string[];
 }
 
 // Oracle
 interface IInvasions {
 	activation: number;
-    expiry:     number;
-    invasions: IInvasion[];
+	expiry:     number;
+	invasions: IInvasion[];
 }
 interface IInvasion {
 	id:       string;
@@ -47,8 +47,8 @@ interface IInvasion {
 // worldState
 interface IMongoDate {
 	$date: {
-        $numberLong: string;
-    };
+		$numberLong: string;
+	};
 }
 
 // worldState
@@ -57,10 +57,10 @@ interface IDailyDeal {
 	Activation: IMongoDate;
 	Expiry: IMongoDate;
 	Discount: number;
-    OriginalPrice: number;
-    SalePrice: number;
-    AmountTotal: number;
-    AmountSold: number;
+	OriginalPrice: number;
+	SalePrice: number;
+	AmountTotal: number;
+	AmountSold: number;
 }
 
 // common.js
@@ -112,7 +112,7 @@ declare global {
 				Variants: {
 					missionType: TMissionType;
 					modifierType: string;
-        			node: string;
+					node: string;
 				}[];
 			}[];
 			LiteSorties: {
@@ -122,12 +122,12 @@ declare global {
 				Boss: "SORTIE_BOSS_AMAR" | "SORTIE_BOSS_NIRA" | "SORTIE_BOSS_BOREAL";
 				Missions: {
 					missionType: TMissionType;
-        			node: string;
+					node: string;
 				}[];
 			}[];
 			ActiveMissions: {
 				_id: { $oid: string };
-    			Region: number;
+				Region: number;
 				Seed: number;
 				Activation: IMongoDate;
 				Expiry: IMongoDate;
@@ -140,7 +140,7 @@ declare global {
 				_id: { $oid: string };
 				Activation: IMongoDate;
 				Expiry: IMongoDate;
-    			Node: string;
+				Node: string;
 				Manifest: {
 					ItemType: string;
 					PrimePrice: number;
@@ -192,7 +192,7 @@ ExportChallenges_promise.then(res => { (window as any).ExportChallenges = res; }
 ExportMissionTypes_promise.then(res => { (window as any).ExportMissionTypes = res; });
 ExportFactions_promise.then(res => { (window as any).ExportFactions = res; });
 
-function formatExpiry(expiry)
+function formatExpiry(expiry: number): string
 {
 	expiry -= expiry % 1000; expiry += 1000; // normalise the ms so everything ticks at the same time
 	const time = Date.now();
@@ -204,7 +204,7 @@ function formatExpiry(expiry)
 	return deltaToUnits(delta).join(" ");
 }
 
-function deltaToUnits(delta)
+function deltaToUnits(delta: number): string[]
 {
 	delta = Math.abs(delta);
 
@@ -228,12 +228,12 @@ function deltaToUnits(delta)
 	return units;
 }
 
-function formatActivation(activation)
+function formatActivation(activation: number): string
 {
 	return deltaToUnits(Date.now() - activation)[0];
 }
 
-function createExpiryBadge(expiry)
+function createExpiryBadge(expiry: number): HTMLSpanElement
 {
 	const span = document.createElement("span");
 	span.setAttribute("data-expiry", expiry);
@@ -242,7 +242,7 @@ function createExpiryBadge(expiry)
 	return span;
 }
 
-function setDatum(name, value, expiry)
+function setDatum(name: string, value: string, expiry: number): void
 {
 	const elm = document.getElementById(name);
 	elm.querySelectorAll("[data-bs-toggle=tooltip]").forEach(x => window.bootstrap.Tooltip.getInstance(x).dispose());
@@ -250,7 +250,7 @@ function setDatum(name, value, expiry)
 	elm.appendChild(createExpiryBadge(expiry));
 }
 
-function updateVallis()
+function updateVallis(): void
 {
 	const EPOCH = new Date("November 10, 2018 08:13:48 UTC").getTime();
 	const time = Date.now();
@@ -264,7 +264,7 @@ function updateVallis()
 }
 updateVallis();
 
-function updateDuviriMoodLocalised()
+function updateDuviriMoodLocalised(): void
 {
 	setDatum("duviri", osdict[[
 		"/Lotus/Language/Duviri/SadMoodTitleShort",
@@ -275,7 +275,7 @@ function updateDuviriMoodLocalised()
 	][window.duviri_mood_index % 5]], window.duviri_expiry);
 }
 
-function updateDuviriMood()
+function updateDuviriMood(): void
 {
 	const moodIndex = Math.trunc(Date.now() / 7200000);
 	const moodStart = moodIndex * 7200000;
@@ -290,7 +290,7 @@ function updateDuviriMood()
 osdict_promise.then(() => updateDuviriMood());
 
 let sundown_update_queued = false;
-function updateDayNightCycle()
+function updateDayNightCycle(): void
 {
 	const time = Date.now();
 	const cycleNightStart = window.bountyCycleExpiry - 3_000_000;
@@ -338,7 +338,7 @@ const allyNames = {
 	"/Lotus/Types/Gameplay/1999Wf/ProtoframeAllies/QuincyAllyAgent": "Quincy",
 };
 
-function updateBountyCycleLocalised()
+function updateBountyCycleLocalised(): void
 {
 	document.getElementById("bounty-rot-rewards").textContent = rotRewards[window.bountyCycle.rot].map(x => dict[x]).join(", ");
 	document.getElementById("vault-rot-rewards").textContent = vaultRotRewards[window.bountyCycle.vaultRot].map(x => dict[x]).join(", ");
@@ -370,7 +370,7 @@ function updateBountyCycleLocalised()
 	}
 }
 
-function updateBountyCycle()
+function updateBountyCycle(): void
 {
 	window.refresh_bounty_cycle_at = undefined;
 	fetch("https://oracle.browse.wf/bounty-cycle").then(res => res.json()).then(async (bountyCycle: IBountyCycle) =>
@@ -397,7 +397,7 @@ function updateBountyCycle()
 	});
 }
 
-function updateNames()
+function updateNames(): void
 {
 	document.getElementById("poe-name").textContent = dict["/Lotus/Language/Locations/EidolonPlains"] + " / " + dict["/Lotus/Language/Locations/Earth"];
 	document.getElementById("vallis-name").textContent = dict["/Lotus/Language/Locations/VenusLandscape"];
@@ -409,7 +409,7 @@ function updateNames()
 	document.getElementById("ZarimanSyndicate-name").textContent = dict["/Lotus/Language/Syndicates/ZarimanName"];
 }
 
-async function updateArbyLocalised()
+async function updateArbyLocalised(): Promise<void>
 {
 	// dicts are guaranteed available here
 	await ExportFactions_promise;
@@ -419,7 +419,7 @@ async function updateArbyLocalised()
 	document.getElementById("arby-where").textContent = "@ " + dict[window.arby_node.name] + ", " + dict[window.arby_node.systemName];
 }
 
-function updateArby()
+function updateArby(): void
 {
 	// dicts are guaranteed available here
 
@@ -434,7 +434,7 @@ function updateArby()
 	setTimeout(updateArby, window.arby_expiry - Date.now());
 }
 
-async function updateIncursionsLocalised()
+async function updateIncursionsLocalised(): Promise<void>
 {
 	// dicts are guaranteed available here
 	await ExportFactions_promise;
@@ -456,7 +456,7 @@ async function updateIncursionsLocalised()
 	}
 }
 
-function updateIncursions()
+function updateIncursions(): void
 {
 	const today = Math.trunc(Date.now() / 86400000) * 86400;
 	const epochDay = window.incursions[0][0];
@@ -466,14 +466,14 @@ function updateIncursions()
 	setTimeout(updateIncursions, window.incursions_expiry - Date.now());
 }
 
-function addTooltip(elm, title)
+function addTooltip(elm: HTMLElement, title: string): any
 {
 	elm.setAttribute("data-bs-toggle", "tooltip");
 	elm.setAttribute("data-bs-title", title);
 	return new window.bootstrap.Tooltip(elm);
 }
 
-function updateWeeklyLocalised()
+function updateWeeklyLocalised(): void
 {
 	{
 		setDatum("labConquest-header", osdict["/Lotus/Language/Conquest/SolarMapLabConquestNode"], window.refresh_weekly_at);
@@ -590,7 +590,7 @@ function updateWeeklyLocalised()
 	}
 }
 
-function updateWeekly()
+function updateWeekly(): void
 {
 	window.refresh_weekly_at = undefined;
 	Promise.all([
@@ -636,7 +636,7 @@ function updateWeekly()
 	});
 }
 
-function updateNewsTicker()
+function updateNewsTicker(): void
 {
 	let highest_time = 0;
 	const items = [];
@@ -739,7 +739,7 @@ function updateNewsTicker()
 	document.querySelector("#news-body > :last-child").classList.remove("mb-1");
 }
 
-async function updateNewsSources()
+async function updateNewsSources(): Promise<void>
 {
 	window.refresh_news_sources_at = undefined;
 
@@ -799,7 +799,7 @@ async function updateNewsSources()
 	}
 }
 
-function updateWorldStateLocalised()
+function updateWorldStateLocalised(): void
 {
 	updateNewsTicker();
 	updateSorties();
@@ -811,7 +811,7 @@ function updateWorldStateLocalised()
 	updateFissures();
 }
 
-function updateWorldState()
+function updateWorldState(): void
 {
 	window.refresh_world_state_at = undefined;
 	fetch("https://oracle.browse.wf/worldState.json?" + Date.now()).then(res => res.json()).then(worldState =>
@@ -871,7 +871,7 @@ const sortieModifiers = {
 	"SORTIE_MODIFIER_BOW_ONLY": "Bow Only",
 };
 
-function setWorldStateExpiry(expiry)
+function setWorldStateExpiry(expiry: number): void
 {
 	if (Date.now() > expiry)
 	{
@@ -884,7 +884,7 @@ function setWorldStateExpiry(expiry)
 	}
 }
 
-async function updateSorties()
+async function updateSorties(): Promise<void>
 {
 	await dicts_promise;
 	await ExportMissionTypes_promise;
@@ -932,7 +932,7 @@ async function updateSorties()
 	document.getElementById("litesortie-body").innerHTML += " • " + mission_names.join(", ");
 }
 
-function updateKinePage()
+function updateKinePage(): void
 {
 	const Tmp = JSON.parse(window.worldState.Tmp ?? "{}");
 	const lang_code = (localStorage.getItem("lang") ?? "en");
@@ -942,7 +942,7 @@ function updateKinePage()
 	}
 }
 
-async function updateDarvosDeal()
+async function updateDarvosDeal(): Promise<void>
 {
 	window.dailyDeal = window.worldState.DailyDeals.find(x => Date.now() >= parseInt(x.Activation.$date.$numberLong) && Date.now() < parseInt(x.Expiry.$date.$numberLong));
 	setDatum("darvo-header", "Darvo's Deal", window.dailyDeal.Expiry.$date.$numberLong);
@@ -966,7 +966,7 @@ async function updateDarvosDeal()
 	window.last_darvo_deal = window.dailyDeal.Activation.$date.$numberLong;
 }
 
-async function updateBaro()
+async function updateBaro(): Promise<void>
 {
 	await dicts_promise;
 	await ExportRegions_promise;
@@ -1051,7 +1051,7 @@ async function updateBaro()
 	}
 }
 
-async function updateAlerts()
+async function updateAlerts(): Promise<void>
 {
 	if (window.worldState.Alerts.length != 0)
 	{
@@ -1138,7 +1138,7 @@ async function updateAlerts()
 	window.last_alert_count = window.worldState.Alerts.length;
 }
 
-async function updateGoals()
+async function updateGoals(): Promise<void>
 {
 	if (window.worldState.Goals.length != 0)
 	{
@@ -1156,7 +1156,7 @@ async function updateGoals()
 	}
 }
 
-function updateTeshin()
+function updateTeshin(): void
 {
 	const EPOCH = 1736121600 * 1000;
 	const week = Math.trunc((Date.now() - EPOCH) / 604800000);
@@ -1211,7 +1211,7 @@ const weaponChoices = [
 	["/Lotus/Language/Items/RifleName", "/Lotus/Language/Items/PistolName", "/Lotus/Language/Items/LongSwordName", "/Lotus/Language/Items/HuntingBowName", "/Lotus/Language/Items/KunaiName"]
 ];
 
-function updateCircuitLocalised()
+function updateCircuitLocalised(): void
 {
 	const EPOCH = 1734307200 * 1000;
 	const week = Math.trunc((Date.now() - EPOCH) / 604800000);
@@ -1219,7 +1219,7 @@ function updateCircuitLocalised()
 	document.getElementById("circuit-weapons").textContent = [...weaponChoices[week % weaponChoices.length]].map(x => dict[x]).join(" · ") + " ";
 }
 
-function updateCircuit()
+function updateCircuit(): void
 {
 	const EPOCH = 1734307200 * 1000;
 	const week = Math.trunc((Date.now() - EPOCH) / 604800000);
@@ -1266,7 +1266,7 @@ function updateCircuit()
 }
 dict_promise.then(updateCircuit);
 
-function loadScriptPromise(src)
+function loadScriptPromise(src: string): Promise<void>
 {
 	return new Promise((resolve, reject) =>
 	{
@@ -1279,17 +1279,17 @@ function loadScriptPromise(src)
 }
 
 const item_data_promises = {};
-function getItemDataPromise(uniqueName)
+function getItemDataPromise(uniqueName: string): Promise<any>
 {
-	uniqueName = uniqueName.split("/Lotus/StoreItems/").join("/Lotus/");
-	if (!item_data_promises[uniqueName])
-	{
-		item_data_promises[uniqueName] = fetch("https://browse.wf" + uniqueName).then(res => res.json());
-	}
-	return item_data_promises[uniqueName];
+		uniqueName = uniqueName.split("/Lotus/StoreItems/").join("/Lotus/");
+		if (!item_data_promises[uniqueName])
+		{
+				item_data_promises[uniqueName] = fetch("https://browse.wf" + uniqueName).then(res => res.json());
+		}
+		return item_data_promises[uniqueName];
 }
 
-async function getItemNamePromise(uniqueName)
+async function getItemNamePromise(uniqueName: string): Promise<string>
 {
 	try
 	{
@@ -1313,13 +1313,13 @@ async function getItemNamePromise(uniqueName)
 	}
 }
 
-function isOidMarkedAsCompleted(oid)
+function isOidMarkedAsCompleted(oid: string): boolean
 {
 	const arr = JSON.parse(localStorage.getItem("oids_completed") ?? "[]");
 	return arr.findIndex(x => x == oid) != -1;
 }
 
-function toggleOidCompletion(oid)
+function toggleOidCompletion(oid: string): void
 {
 	const arr = JSON.parse(localStorage.getItem("oids_completed") ?? "[]");
 	const index = arr.findIndex(x => x == oid);
@@ -1334,7 +1334,7 @@ function toggleOidCompletion(oid)
 	localStorage.setItem("oids_completed", JSON.stringify(arr));
 }
 
-function createCompletionToggle(oid)
+function createCompletionToggle(oid: string): HTMLAnchorElement
 {
 	let what = "completed";
 	if (oid.substr(0, 5) == "kahlb")
@@ -1355,7 +1355,7 @@ function createCompletionToggle(oid)
 	return a;
 }
 
-async function updateInvasionsLocalised()
+async function updateInvasionsLocalised(): Promise<void>
 {
 	const tbody = document.createElement("tbody");
 	let last_id = "";
@@ -1419,7 +1419,7 @@ async function updateInvasionsLocalised()
 	document.getElementById("invasions-table").appendChild(tbody);
 }
 
-function updateInvasions()
+function updateInvasions(): void
 {
 	window.refresh_invasions_at = undefined;
 	fetch("https://oracle.browse.wf/invasions").then(res => res.json()).then(async (res: IInvasions) =>
@@ -1442,7 +1442,7 @@ function updateInvasions()
 	});
 }
 
-function setFissuresExpiry(expiry)
+function setFissuresExpiry(expiry: number): void
 {
 	if (!window.refresh_fissures_at || window.refresh_fissures_at > expiry)
 	{
@@ -1459,7 +1459,7 @@ const fissureTiers = {
 	VoidT6: "Omnia",
 };
 
-async function updateFissures()
+async function updateFissures(): Promise<void>
 {
 	await dict_promise;
 	await ExportRegions_promise;
@@ -1647,7 +1647,7 @@ setInterval(function()
 	}
 }, 500);
 
-function refreshCollapseStatus(elm)
+function refreshCollapseStatus(elm: HTMLElement): void
 {
 	const engaged = localStorage.getItem("live.collapse." + elm.getAttribute("data-collapse-toggle"));
 	const span = document.createElement("span");
@@ -1684,7 +1684,7 @@ document.querySelectorAll<HTMLSpanElement>("[data-collapse-toggle]").forEach(elm
 	};
 });
 
-function sendNotification(text)
+function sendNotification(text: string): void
 {
 	const toast = document.createElement("div");
 	toast.className = "toast align-items-center text-bg-primary border-0";
@@ -1707,7 +1707,7 @@ function sendNotification(text)
 	}
 }
 
-function refreshNotifStatus(elm)
+function refreshNotifStatus(elm: HTMLElement): void
 {
 	const enabled = localStorage.getItem("live.notif." + elm.getAttribute("data-notif-toggle"));
 	const span = document.createElement("span");

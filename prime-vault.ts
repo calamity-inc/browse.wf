@@ -30,7 +30,25 @@ Promise.all([
 	fetch("https://browse.wf/warframe-public-export-plus/ExportWarframes.json").then(res => res.json()),
 	fetch("https://browse.wf/warframe-public-export-plus/ExportSentinels.json").then(res => res.json()),
 	fetch("https://raw.githubusercontent.com/calamity-inc/warframe-worldstate-history/senpai/worldState.json").then(res => res.json()),
-	]).then(function([ dict, ExportRelics, ExportRewards, ExportRecipes, ExportWeapons, ExportWarframes, ExportSentinels, worldState ])
+	]).then(function([
+		dict,
+		ExportRelics,
+		ExportRewards,
+		ExportRecipes,
+		ExportWeapons,
+		ExportWarframes,
+		ExportSentinels,
+		worldState
+	]: [
+		Record<string, string>,
+		Record<string, IRelic>,
+		Record<string, TMissionDeck>,
+		Record<string, IRecipe>,
+		Record<string, IWeapon>,
+		Record<string, IPowersuit>,
+		Record<string, ISentinel>,
+		any
+	]): void
 {
 	(window as any).dict = dict;
 	//(window as any).ExportRelics = ExportRelics;
@@ -104,7 +122,7 @@ Promise.all([
 	onLanguageUpdate = updateList;
 });
 
-function updateList()
+function updateList(): void
 {
 	const state_to_elm: Record<TState, HTMLDivElement> = {
 		[STATE_VAULTED]: document.getElementById("vaulted") as HTMLDivElement,

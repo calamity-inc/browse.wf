@@ -20,21 +20,21 @@ declare let currentHour: number;
 const days = [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ];
 const months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 
-function loc(key)
+function loc(key: string): string
 {
 	return dict[key] ?? key;
 }
 
-function totwo(num)
+function totwo(num: number): string
 {
 	if (num < 10)
 	{
 		return "0" + num;
 	}
-	return num;
+	return num.toString();
 }
 
-function formattz(offset)
+function formattz(offset: number): string
 {
 	if (offset == 0)
 	{
@@ -49,7 +49,7 @@ function formattz(offset)
 }
 document.getElementById("local-time-option").textContent += " (" + formattz(new Date().getTimezoneOffset()) + ")";
 
-function formathour(hour)
+function formathour(hour: number): string
 {
 	switch ((document.getElementById("select-hourfmt") as HTMLSelectElement).value)
 	{
@@ -111,7 +111,7 @@ Promise.all([
 	onLanguageUpdate();
 });
 
-function updateFilterNamesForLocale()
+function updateFilterNamesForLocale(): void
 {
 	document.querySelector("label[for=filter-MT_SURVIVAL]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Survival"]);
 	document.querySelector("label[for=filter-MT_DEFENSE]").textContent = toTitleCase(dict["/Lotus/Language/Missions/MissionName_Defense"]);
@@ -132,7 +132,7 @@ function updateFilterNamesForLocale()
 	document.querySelector("label[for=filter-FC_MITW]").textContent = dict["/Lotus/Language/Game/Faction_MITW"];
 }
 
-function updateLog()
+function updateLog(): void
 {
 	console.time("updateLog");
 
@@ -281,7 +281,7 @@ function updateLog()
 	console.timeEnd("updateLog");
 }
 
-function saveSettings()
+function saveSettings(): void
 {
 	let hash = "days=" + encodeURIComponent((document.getElementById("select-days") as HTMLSelectElement).value)
 			+ "&tz=" + encodeURIComponent((document.getElementById("select-tz") as HTMLSelectElement).value)
