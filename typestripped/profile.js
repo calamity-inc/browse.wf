@@ -80,6 +80,7 @@ Promise.all([
     fetch("https://browse.wf/warframe-public-export-plus/ExportAchievements.json").then(res => res.json()),
     fetch("https://browse.wf/warframe-public-export-plus/ExportCustoms.json").then(res => res.json()),
     fetch("https://browse.wf/warframe-public-export-plus/ExportEnemies.json").then(res => res.json()),
+    fetch("https://browse.wf/warframe-public-export-plus/ExportFactions.json").then(res => res.json()),
     fetch("https://browse.wf/warframe-public-export-plus/ExportFlavour.json").then(res => res.json()),
     fetch("https://browse.wf/warframe-public-export-plus/ExportNightwave.json").then(res => res.json()),
     fetch("https://browse.wf/warframe-public-export-plus/ExportRegions.json").then(res => res.json()),
@@ -88,11 +89,12 @@ Promise.all([
     fetch("https://browse.wf/warframe-public-export-plus/ExportWarframes.json").then(res => res.json()),
     fetch("https://browse.wf/warframe-public-export-plus/ExportWeapons.json").then(res => res.json()),
     fetch("supplemental-data/profile-[DE]Rebecca.json").then(res => res.json())
-]).then(([dict, ExportAchievements, ExportCustoms, ExportEnemies, ExportFlavour, ExportNightwave, ExportRegions, ExportSentinels, ExportSyndicates, ExportWarframes, ExportWeapons, profile]) => {
+]).then(([dict, ExportAchievements, ExportCustoms, ExportEnemies, ExportFactions, ExportFlavour, ExportNightwave, ExportRegions, ExportSentinels, ExportSyndicates, ExportWarframes, ExportWeapons, profile]) => {
     window.dict = dict;
     window.ExportAchievements = ExportAchievements;
     window.ExportCustoms = ExportCustoms;
     window.ExportEnemies = ExportEnemies;
+    window.ExportFactions = ExportFactions;
     window.ExportFlavour = ExportFlavour;
     window.ExportRegions = ExportRegions;
     window.ExportSentinels = ExportSentinels;
@@ -352,7 +354,7 @@ function renderProfile() {
                     if (node.missionType != "MT_PVP") {
                         td.textContent += " (" + toTitleCase(dict[node.missionName]);
                         if (node.faction && node.systemIndex != 21) {
-                            td.textContent += " - " + toTitleCase(dict[node.factionName]);
+                            td.textContent += " - " + toTitleCase(dict[ExportFactions[node.faction].name]);
                         }
                         td.textContent += ")";
                     }

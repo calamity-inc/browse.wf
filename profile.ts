@@ -1,4 +1,4 @@
-import type { IAchievement, IColour, ICustom, IExportEnemies, IExportNightwave, IFlavourItem, IPowersuit, IRegion, ISentinel, ISyndicate, IWeapon } from "warframe-public-export-plus";
+import type { IAchievement, IColour, ICustom, IExportEnemies, IExportNightwave, IFaction, IFlavourItem, IPowersuit, IRegion, ISentinel, ISyndicate, IWeapon, TFaction } from "warframe-public-export-plus";
 
 // PlutoScript
 declare const pluto_require: (file: string) => Promise<void>;
@@ -14,6 +14,7 @@ declare let dict: Record<string, string>;
 declare let ExportAchievements: Record<string, IAchievement>;
 declare let ExportCustoms: Record<string, ICustom>;
 declare let ExportEnemies: IExportEnemies;
+declare let ExportFactions: Record<TFaction, IFaction>;
 declare let ExportFlavour: Record<string, IFlavourItem>;
 declare let ExportNightwave: IExportNightwave;
 declare let ExportRegions: Record<string, IRegion>;
@@ -128,6 +129,7 @@ Promise.all([
 	fetch("https://browse.wf/warframe-public-export-plus/ExportAchievements.json").then(res => res.json()),
 	fetch("https://browse.wf/warframe-public-export-plus/ExportCustoms.json").then(res => res.json()),
 	fetch("https://browse.wf/warframe-public-export-plus/ExportEnemies.json").then(res => res.json()),
+	fetch("https://browse.wf/warframe-public-export-plus/ExportFactions.json").then(res => res.json()),
 	fetch("https://browse.wf/warframe-public-export-plus/ExportFlavour.json").then(res => res.json()),
 	fetch("https://browse.wf/warframe-public-export-plus/ExportNightwave.json").then(res => res.json()),
 	fetch("https://browse.wf/warframe-public-export-plus/ExportRegions.json").then(res => res.json()),
@@ -141,6 +143,7 @@ Promise.all([
 		ExportAchievements,
 		ExportCustoms,
 		ExportEnemies,
+		ExportFactions,
 		ExportFlavour,
 		ExportNightwave,
 		ExportRegions,
@@ -155,6 +158,7 @@ Promise.all([
 	(window as any).ExportAchievements = ExportAchievements;
 	(window as any).ExportCustoms = ExportCustoms;
 	(window as any).ExportEnemies = ExportEnemies;
+	(window as any).ExportFactions = ExportFactions;
 	(window as any).ExportFlavour = ExportFlavour;
 	(window as any).ExportRegions = ExportRegions;
 	(window as any).ExportSentinels = ExportSentinels;
@@ -481,7 +485,7 @@ function renderProfile(): void
 						td.textContent += " (" + toTitleCase(dict[node.missionName])
 						if (node.faction && node.systemIndex != 21)
 						{
-							td.textContent += " - " + toTitleCase(dict[node.factionName]);
+							td.textContent += " - " + toTitleCase(dict[ExportFactions[node.faction].name]);
 						}
 						td.textContent += ")";
 					}
