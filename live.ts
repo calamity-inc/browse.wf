@@ -1091,6 +1091,7 @@ const weaponChoices = [
 	["/Lotus/Language/Items/RegorAxeShieldName", "/Lotus/Language/Items/TennoAssaultRifleName", "/Lotus/Language/Items/TennoRevolverName", "/Lotus/Language/Items/NamiSoloName", "/Lotus/Language/Items/BurstRifleName"],
 	["/Lotus/Language/Weapons/SybarisPistolName", "/Lotus/Language/Items/IceHammerName", "/Lotus/Language/Items/StalkerBowName", "/Lotus/Language/Items/StalkerKunaiName", "/Lotus/Language/Items/StalkerScytheName"],
 	["/Lotus/Language/Items/EnergyRifleName", "/Lotus/Language/Items/TennoLeverActionRifleName", "/Lotus/Language/Items/CorpusMinigunName", "/Lotus/Language/Items/BurstPistolName", "/Lotus/Language/Items/TennoSaiName"],
+	["/Lotus/Language/Items/TennoSniperRifleName", "/Lotus/Language/Items/GrineerGooGunName", "/Lotus/Language/Items/AutoCrossBowName", "/Lotus/Language/Items/TnoRapierName", "/Lotus/Language/Items/CorpusPunchKickWeaponName"],
 	["/Lotus/Language/Items/RifleName", "/Lotus/Language/Items/PistolName", "/Lotus/Language/Items/LongSwordName", "/Lotus/Language/Items/HuntingBowName", "/Lotus/Language/Items/KunaiName"]
 ];
 
