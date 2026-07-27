@@ -7,9 +7,9 @@
   "devDependencies": {
     "@types/bootstrap": "^5.2.10",
     "@types/showdown": "^2.0.6",
-    "@typescript-eslint/eslint-plugin": "^8.43.0",
-    "@typescript-eslint/parser": "^8.43.0",
-    "eslint": "^8",
+    "@typescript-eslint/eslint-plugin": "^8.65.0",
+    "@typescript-eslint/parser": "^8.65.0",
+    "eslint": "^10.8.0",
     "php-ts-dev": "^0.1.1",
     "typescript": "^5.9.2",
     "warframe-public-export-plus": "^0.6.7"
