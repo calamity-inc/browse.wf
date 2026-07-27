@@ -14,6 +14,7 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
+      # Verify .ts is sane and .js & .map files match
       - run: npm exec tsc
       - name: Fail if there are uncommitted changes
         run: |
@@ -23,3 +24,5 @@ jobs:
             git --no-pager diff
             exit 1
           fi
+      # Additional sanity checking
+      - run: npm run lint
