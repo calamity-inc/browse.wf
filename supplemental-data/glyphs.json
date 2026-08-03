@@ -2242,5 +2242,11 @@
     },
     "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageJustHailey": {
         "promo_code": "JustHailey"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/AvatarImageArborealKeyGlyph": {
+        "promo_code": "ARBOREALKEY",
+        "other-site": "https://arborealkey.com",
+        "twitter": "https://twitter.com/arborealkey",
+        "youtube": "https://www.youtube.com/channel/UCrUG7zicPTyfvOF7qjHah1g"
     }
 }
