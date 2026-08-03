@@ -18,6 +18,7 @@ Promise.all([
     fetch("https://browse.wf/warframe-public-export-plus/ExportWeapons.json").then(res => res.json()),
     fetch("https://browse.wf/warframe-public-export-plus/ExportUpgrades.json").then(res => res.json()),
     fetch("https://browse.wf/warframe-public-export-plus/ExportArcanes.json").then(res => res.json()),
+    fetch("https://browse.wf/warframe-public-export-plus/ExportAvionics.json").then(res => res.json()),
     fetch("https://browse.wf/warframe-public-export-plus/ExportResources.json").then(res => res.json()),
     fetch("https://browse.wf/warframe-public-export-plus/ExportFlavour.json").then(res => res.json()),
     fetch("https://browse.wf/warframe-public-export-plus/ExportCustoms.json").then(res => res.json()),
@@ -32,7 +33,7 @@ Promise.all([
     fetch("https://browse.wf/warframe-public-export-plus/ExportRelics.json").then(res => res.json()),
     fetch("https://browse.wf/warframe-public-export-plus/ExportAbilities.json").then(res => res.json()),
     fetch("supplemental-data/glyphs.json").then(res => res.json())
-]).then(([dict, ExportWarframes, ExportWeapons, ExportUpgrades, ExportArcanes, ExportResources, ExportFlavour, ExportCustoms, ExportGear, ExportSentinels, ExportRewards, ExportRegions, ExportEnemies, ExportRecipes, ExportImages, ExportTextIcons, ExportRelics, ExportAbilities, supplementalGlyphData]) => {
+]).then(([dict, ExportWarframes, ExportWeapons, ExportUpgrades, ExportArcanes, ExportAvionics, ExportResources, ExportFlavour, ExportCustoms, ExportGear, ExportSentinels, ExportRewards, ExportRegions, ExportEnemies, ExportRecipes, ExportImages, ExportTextIcons, ExportRelics, ExportAbilities, supplementalGlyphData]) => {
     window.dict = dict;
     window.dict_entries = Object.entries(window.dict).sort(([key1, value1], [key2, value2]) => value1.length - value2.length);
     //(window as any).ExportWarframes = ExportWarframes;
@@ -62,6 +63,7 @@ Promise.all([
     window.ExportWeapons_entries = Object.entries(ExportWeapons).filter(([uniqueName, item]) => item.totalDamage != 0);
     window.ExportUpgrades_entries = Object.entries(ExportUpgrades);
     window.ExportArcanes_entries = Object.entries(ExportArcanes).filter(arr => !arr[1].excludeFromCodex); // Filter fixes result for Arcane Steadfast
+    window.ExportAvionics_entries = Object.entries(ExportAvionics);
     window.ExportResources_entries = Object.entries(ExportResources);
     window.ExportFlavour_entries = Object.entries(ExportFlavour);
     window.ExportCustoms_entries = Object.entries(ExportCustoms);
@@ -74,6 +76,7 @@ Promise.all([
         weapon: window.ExportWeapons_entries,
         upgrade: window.ExportUpgrades_entries,
         arcane: window.ExportArcanes_entries,
+        avionic: window.ExportAvionics_entries,
         resource: window.ExportResources_entries,
         flavour: window.ExportFlavour_entries,
         custom: window.ExportCustoms_entries,
@@ -290,7 +293,7 @@ function doQuery(query) {
             }
             root.appendChild(p);
         }
-        else if (result.type == "upgrade") {
+        else if (result.type == "upgrade" || result.type == "avionic") {
             let p = document.createElement("p");
             p.className = "card-text";
             if (result.value.fusionLimit == 0) {
@@ -466,6 +469,7 @@ function doQuery(query) {
             || result.type == "weapon"
             || result.type == "upgrade"
             || result.type == "arcane"
+            || result.type == "avionic"
             || result.type == "resource"
             || result.type == "sentinel") {
             const dropType = window.itemToRecipeMap[result.key] ?? result.key;
