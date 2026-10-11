@@ -22,19 +22,47 @@
 			text-shadow: #000 0 0 5px, #000 0 0 10px;
 		}
 
-		#picker-table tr:first-child td:first-child > div {
+		#picker-table th {
+			color: #fff;
+			font-weight: 600;
+			padding: 0 0.35em;
+			text-align: center;
+			background: var(--bs-body-bg);
+		}
+
+		#picker-table thead th {
+			position: sticky;
+			top: 0;
+			z-index: 1;
+			height: 1.5em;
+			vertical-align: bottom;
+		}
+
+		#picker-table tbody th {
+			position: sticky;
+			right: 0;
+			z-index: 1;
+			width: 1.5em;
+		}
+
+		#picker-table thead th:last-child {
+			right: 0;
+			z-index: 2;
+		}
+
+		#picker-table tbody tr:first-child td:first-child > div {
 			border-top-left-radius: 0.375rem;
 		}
 
-		#picker-table tr:first-child td:last-child > div {
+		#picker-table tbody tr:first-child td:last-of-type > div {
 			border-top-right-radius: 0.375rem;
 		}
 
-		#picker-table tr:last-child td:first-child > div {
+		#picker-table tbody tr:last-child td:first-child > div {
 			border-bottom-left-radius: 0.375rem;
 		}
 
-		#picker-table tr:last-child td:last-child > div {
+		#picker-table tbody tr:last-child td:last-of-type > div {
 			border-bottom-right-radius: 0.375rem;
 		}
 	</style>
@@ -219,9 +247,33 @@
 		function updatePickerTable(hexColours)
 		{
 			const targetRgb = document.querySelector("input[type=text]").value.length == 7 ? hexToRgb(document.querySelector("input[type=text]").value) : undefined;
+			const table = document.getElementById("picker-table");
+			table.innerHTML = "";
 
-			document.getElementById("picker-table").innerHTML = "";
+			const thead = document.createElement("thead");
+			const headRow = document.createElement("tr");
+			for (const label of ["A", "B", "C", "D", "E", ""])
+			{
+				const th = document.createElement("th");
+				th.scope = "col";
+				th.textContent = label;
+				headRow.appendChild(th);
+			}
+			thead.appendChild(headRow);
+			table.appendChild(thead);
+
+			const tbody = document.createElement("tbody");
 			let tr = document.createElement("tr");
+			let row = 0;
+			const finishRow = () =>
+			{
+				const th = document.createElement("th");
+				th.scope = "row";
+				th.textContent = ++row;
+				tr.appendChild(th);
+				tbody.appendChild(tr);
+				tr = document.createElement("tr");
+			};
 			for (let i = 0; i != hexColours.length; )
 			{
 				const hex = peColourToHex(hexColours[i])
@@ -251,10 +303,14 @@
 				tr.appendChild(td);
 				if ((++i % 5) == 0)
 				{
-					document.getElementById("picker-table").appendChild(tr);
-					tr  = document.createElement("tr");
+					finishRow();
 				}
 			}
+			if (tr.children.length > 0)
+			{
+				finishRow();
+			}
+			table.appendChild(tbody);
 		}
 
 		function setActivePicker(uniqueName)
