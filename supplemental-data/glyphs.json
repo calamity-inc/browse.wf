@@ -1089,6 +1089,7 @@
         "promo_code": "MedusaCaptures"
     },
     "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageMemeSage": {
+        "promo_code": "MemeSage",
         "discord": "https://discord.gg/msFkrKK",
         "glyphwave": "4",
         "twitch": "https://twitch.tv/memesage",
@@ -2242,5 +2243,47 @@
     },
     "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageTennoChronicler": {
         "promo_code": "WARFRAMEWIKI"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImagePherpLancer": {
+        "promo_code": "PHERPLANCER"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageBugbreach": {
+        "promo_code": "BUGBREACH"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageZliDe": {
+        "promo_code": "ZLIDE"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageLuckyGoblin": {
+        "promo_code": "LUCKYGOBLIN"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageRoboMythos": {
+        "promo_code": "ROBOMYTHOS"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageXiaoGuang": {
+        "promo_code": "XIAOGUANG"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageKakitaros": {
+        "promo_code": "KAKITAROS"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageMactics": {
+        "promo_code": "MACTICS"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageEGirlTenno": {
+        "promo_code": "EGIRLTENNO"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageViceroyCyndr": {
+        "promo_code": "VICEROYCYNDR"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageTennoBen": {
+        "promo_code": "TENNOBEN"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageShiroKosha": {
+        "promo_code": "SHIROKOSHA"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/AvatarImageCarryTheFire": {
+        "promo_code": "CARRYTHEFIRE"
+    },
+    "/Lotus/Types/StoreItems/AvatarImages/FanChannel/AvatarImageBLUTE": {
+        "promo_code": "BRUTEBROWN"
     }
 }

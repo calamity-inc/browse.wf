@@ -1,29 +1,18 @@
-local input = [[https://www.warframe.com/promocode?code=4MORI4N
-https://www.warframe.com/promocode?code=AMAZINGBURI
-https://www.warframe.com/promocode?code=ANAVIIVY
-https://www.warframe.com/promocode?code=BRIGHAN
-https://www.warframe.com/promocode?code=CAUTIONARYTAIL
-https://www.warframe.com/promocode?code=CYANFACADE
-https://www.warframe.com/promocode?code=DYANA
-https://www.warframe.com/promocode?code=DYNOES
-https://www.warframe.com/promocode?code=ENDQUAR
-https://www.warframe.com/promocode?code=FLADBOX
-https://www.warframe.com/promocode?code=FREDDYCAPS
-https://www.warframe.com/promocode?code=HJEMDG
-https://www.warframe.com/promocode?code=IRISILLYCH
-https://www.warframe.com/promocode?code=JUSTOLDPRIME
-https://www.warframe.com/promocode?code=LUALITY
-https://www.warframe.com/promocode?code=MARCOMEATBALL
-https://www.warframe.com/promocode?code=MISCHKA
-https://www.warframe.com/promocode?code=MUSINGTIAN
-https://www.warframe.com/promocode?code=QUITESHALLOW
-https://www.warframe.com/promocode?code=RIESLING
-https://www.warframe.com/promocode?code=SHENPAI
-https://www.warframe.com/promocode?code=SHY_ANABANANA
-https://www.warframe.com/promocode?code=SMETTBONIA
-https://www.warframe.com/promocode?code=SNOOTYDEATH
-https://www.warframe.com/promocode?code=UPSIDEDOWNSMORE
-https://www.warframe.com/promocode?code=ZKOICHI]]
+local input = [[https://www.warframe.com/promocode?code=BRUTEBROWN
+https://www.warframe.com/promocode?code=BUGBREACH
+https://www.warframe.com/promocode?code=CARRYTHEFIRE
+https://www.warframe.com/promocode?code=EGIRLTENNO
+https://www.warframe.com/promocode?code=KAKITAROS
+https://www.warframe.com/promocode?code=LUCKYGOBLIN
+https://www.warframe.com/promocode?code=MACTICS
+https://www.warframe.com/promocode?code=PHERPLANCER
+https://www.warframe.com/promocode?code=ROBOMYTHOS
+https://www.warframe.com/promocode?code=SHIROKOSHA
+https://www.warframe.com/promocode?code=TENNOBEN
+https://www.warframe.com/promocode?code=VICEROYCYNDR
+https://www.warframe.com/promocode?code=XIAOGUANG
+https://www.warframe.com/promocode?code=ZLIDE
+https://www.warframe.com/promocode?code=MemeSage]]
 
 local ExportFlavour_en = require"json".decode(io.contents("../../warframe-public-export/ExportFlavour_en.json")).ExportFlavour
 local function find_glyph_for_code(code)
@@ -34,11 +23,13 @@ local function find_glyph_for_code(code)
 			return glyph.uniqueName
 		end
 	end
-	error("Glyph not found for code: " .. code)
+	print("Glyph not found for code: " .. code)
 end
 local output = {}
 for input:split("\n") as line do
 	local code = line:replace("https://www.warframe.com/promocode?code=", "")
-	output[find_glyph_for_code(code)] = { promo_code = code }
+	if key := find_glyph_for_code(code) then
+		output[key] = { promo_code = code }
+	end
 end
 print(require"json".encode(output, true))
