@@ -1,51 +1,11 @@
-local data = require"json".decode([[{
-    "Tyana Pass": "S",
-    "Alator": "S",
-    "Callisto": "S",
-    "Munio": "S",
-    "Umbriel": "S",
-    "Cinxia": "A",
-    "Cytherean": "A",
-    "Xini": "A",
-    "Oestrus": "B",
-    "Sechura": "B",
-    "Casta": "B",
-    "Seimeni": "B",
-    "Akkad": "B",
-    "Kala-azar": "B",
-    "Hyf": "B",
-    "Ose": "B",
-    "Helene": "B",
-    "Hydron": "B",
-    "Belenus": "B",
-    "Taranis": "B",
-    "Mithra": "C",
-    "Coba": "C",
-    "Spear": "C",
-    "Kadesh": "C",
-    "Paimon": "C",
-    "Tessera": "C",
-    "Odin": "C",
-    "Lith": "C",
-    "Larzac": "C",
-    "Stephano": "C",
-    "Outer Terminus": "C",
-    "Lares": "D",
-    "Sangeru": "D",
-    "Gaia": "D",
-    "Rhea": "D",
-    "Stöfler": "D",
-    "Sinai": "D",
-    "Io": "D"
-}]], require"json".withorder)
-local ExportRegions = require"json".decode(io.contents("../../warframe-public-export-plus/ExportRegions.json"))
-local dict_en = require"json".decode(io.contents("../../warframe-public-export-plus/dict.en.json"))
-local name_to_tag = {}
-for tag, node in ExportRegions do
-	name_to_tag[dict_en[node.name]] = tag
-end
-for data.__order as name do
-	local tier = data[name]
-	assert(name_to_tag[name], name)
-	print(name_to_tag[name]..": \""..tier.."\",")
+local { http, json } = require "*"
+
+local { nodes } = json.decode(http.request("https://arbi.guide/tierlist.json"))
+--local { nodes } = json.decode(io.contents("tierlist.json"))
+
+nodes:sort(|a, b| -> a.id < b.id)
+for nodes as node do
+	if node.tier ~= "F" and node.tier ~= "Special" then
+		print(node.id..": \""..node.tier.."\",")
+	end
 end
