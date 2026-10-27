@@ -31,24 +31,16 @@
 <body data-bs-theme="dark">
 	<?php require "components/navbar.php"; ?>
 	<div class="container pt-3">
-		<div class="alert alert-warning" role="alert">
-			<ul class="mb-0">
-				<li>As of update 38.0.8, it is no longer possible to get profile information via username. To use this tool, you now need an account id. To find your own account id, log in on <a href="https://www.warframe.com/" target="_blank">warframe.com</a> then visit <a href="https://www.warframe.com/api/user-data" target="_blank">https://www.warframe.com/api/user-data</a> to find it after <code>"user_id"</code>.</li>
-				<li>
-					To avoid our server getting rate-limited by DE, you need to manually retrieve your data by visiting the appropriate URL for your platform (replace <code>ACCOUNTID</code>), save the resulting JSON, and upload it below.
-					<ul>
-						<li>PC: <code>https://api.warframe.com/cdn/getProfileViewingData.php?playerId=ACCOUNTID</code></li>
-						<li>PlayStation: <code>https://api-ps4.warframe.com/cdn/getProfileViewingData.php?playerId=ACCOUNTID</code></li>
-						<li>Xbox: <code>https://api-xb1.warframe.com/cdn/getProfileViewingData.php?playerId=ACCOUNTID</code></li>
-						<li>Switch: <code>https://api-swi.warframe.com/cdn/getProfileViewingData.php?playerId=ACCOUNTID</code></li>
-						<li>iOS: <code>https://api-mob.warframe.com/cdn/getProfileViewingData.php?playerId=ACCOUNTID</code></li>
-						<li>Android: <code>https://api-and.warframe.com/cdn/getProfileViewingData.php?playerId=ACCOUNTID</code></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
+		<p>Due to various "dick moves" (that's the professional term) by DE, there's a bit of a process to getting your profile viewing data:</p>
+		<ol>
+			<li>Install Warframe Account ID Grabber from the <a target="_blank" href="https://chromewebstore.google.com/detail/warframe-account-id-grabb/kjjjjdcjnanbbghoebnjnbjlkmmfaiga">Chrome Web Store</a>, <a target="_blank" href="https://addons.mozilla.org/en-GB/firefox/addon/warframe-account-id-grabber/">Firefox Add-ons (AMO)</a>, or <a target="_blank" href="https://github.com/Sainan/warframe-account-id-grabber">source</a>.</li>
+			<li>Ensure you're logged in on <a target="_blank" href="https://www.warframe.com">www.warframe.com</a>.</li>
+			<li>Open the extension window, select your platform, and press "Open Profile Viewing Data".</li>
+			<li>Finally, copy the entire text of the page and save it to a text file to input below.</li>
+		</ol>
 		<form class="mb-3">
-			<input id="profile-file" type="file" class="form-control" accept="application/json" onchange="loadProfile(this.files[0]);" />
+			<input id="profile-file" type="file" class="form-control" accept="*" onchange="loadProfile(this.files[0]);" />
+			<p class="text-body-secondary">This data is not uploaded to browse.wf or third-party servers.</p>
 		</form>
 		<div id="status" class="alert alert-light"><div class="spinner-border spinner-border-sm me-2"></div><span>Loading</span></div>
 		<h3 class="mb-0"><span id="profile-name"></span><span class="text-body-secondary" id="profile-discriminator"></span></h3>
